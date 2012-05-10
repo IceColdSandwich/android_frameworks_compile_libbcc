@@ -81,7 +81,7 @@ bool BitcodeTranslator::translate() {
 
   BitcodeWrapper BCWrapper(mBitcode, mBitcodeSize);
   if (BCWrapper.getTargetAPI() != mVersion) {
-    ALOGE("Bitcode wrapper (%u) and translator (%u) disagree about target API",
+    LOGE("Bitcode wrapper (%u) and translator (%u) disagree about target API",
           BCWrapper.getTargetAPI(), mVersion);
   }
 
@@ -128,7 +128,7 @@ bool BitcodeTranslator::translate() {
       &wrapper, Buffer.size(), BCWrapper.getTargetAPI(),
       BCWrapper.getCompilerVersion(), BCWrapper.getOptimizationLevel());
   if (!actualWrapperLen) {
-    ALOGE("Couldn't produce bitcode wrapper!");
+    LOGE("Couldn't produce bitcode wrapper!");
     return false;
   }
 

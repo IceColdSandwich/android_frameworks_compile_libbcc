@@ -76,7 +76,7 @@ BitcodeWrapperer::BitcodeWrapperer(WrapperInput* infile, WrapperOutput* outfile)
     wrapper_bc_offset_ = kWordSize * kFixedFields;
     wrapper_bc_size_ = GetInFileSize();
   } else {
-    ALOGE("Error: input file is not a bitcode file.\n");
+    LOGE("Error: input file is not a bitcode file.\n");
     error_ = true;
   }
 }
@@ -192,11 +192,11 @@ bool BitcodeWrapperer::ParseWrapperHeader() {
   // Check the android/pnacl fields
   if (!ReadWord(android_header_version_) ||
       !ReadWord(android_target_api_) || !ReadWord(pnacl_bc_version_)) {
-    ALOGW("Error: file not long enough to contain header\n");
+    LOGW("Error: file not long enough to contain header\n");
     return false;
   }
   if (pnacl_bc_version_ != kPnaclBitcodeVersion) {
-    ALOGW("Error: bad PNaCl Bitcode version\n");
+    LOGW("Error: bad PNaCl Bitcode version\n");
     return false;
   }
   int field_data_total = wrapper_bc_offset_ - kWordSize * kFixedFields;
@@ -224,7 +224,7 @@ bool BitcodeWrapperer::ParseWrapperHeader() {
       field_data_read += field_size;
       if (field_data_read > field_data_total) {
         // We read too much data, the header is corrupted
-        ALOGE("Error: raw bitcode offset inconsistent with "
+        LOGE("Error: raw bitcode offset inconsistent with "
               "variable field data\n");
         return false;
       }
